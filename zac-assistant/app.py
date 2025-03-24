@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+ffrom flask import Flask, request, jsonify, render_template
 import requests
 import os
 from flask_cors import CORS
@@ -8,12 +8,12 @@ app = Flask(__name__)
 CORS(app)  # Enable Cross-Origin Resource Sharing
 
 # Constants
-# Use a more conventional environment variable name for your API key.
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+OPENROUTER_API_KEY = os.getenv("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")
 if not OPENROUTER_API_KEY:
     raise ValueError("Missing OPENROUTER_API_KEY environment variable.")
 
-MODEL = "mistralai/mixtral-8x7b-instruct"
+# Updated model name
+MODEL = "openchat/openchat-3-5"  # <-- Replace with the correct model as needed
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 # System prompt for the AI assistant
