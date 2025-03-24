@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zac Assistant</title>
+    <style>
+        body { font-family: Arial; background: #111; color: #eee; padding: 2rem; }
+        input, button { padding: 10px; margin: 5px; }
+        #chat { white-space: pre-wrap; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Talk to Zac's AI Assistant</h1>
+    <input id="message" type="text" placeholder="Ask something..." size="50">
+    <button onclick="sendMessage()">Send</button>
+    <div id="chat"></div>
+
+    <script>
+        async function sendMessage() {
+            const message = document.getElementById("message").value;
+            const chat = document.getElementById("chat");
+            chat.innerHTML += "> " + message + "\n";
+
+            const res = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message })
+            });
+
+            const data = await res.json();
+            chat.innerHTML += "AI: " + data.reply + "\n\n";
+            document.getElementById("message").value = "";
+        }
+    </script>
+</body>
+</html>
