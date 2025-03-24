@@ -11,13 +11,15 @@ def home():
 @app.route("/chat", methods=["POST"])
 def chat():
     user_message = request.json.get("message")
-    api_key = os.environ.get("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")
+
+    # Pull your API key from Render environment
+    api_key = os.environ.get("OPENROUTER_API_KEY")
 
     if not api_key:
         return jsonify({"reply": "Server error: missing API key."}), 500
 
     headers = {
-        "Authorization": f"Bearer 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",
+        "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json"
     }
 
@@ -28,13 +30,14 @@ def chat():
         ]
     }
 
-    response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
-    
-    if response.status_code == 200:
+    try:
+        response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
+        response.raise_for_status()
         reply = response.json()["choices"][0]["message"]["content"]
         return jsonify({"reply": reply})
-    else:
-        return jsonify({"reply": "Error: Something went wrong talking to OpenRouter."}), 500
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return jsonify({"reply": "There was a problem getting a response."}), 500
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
