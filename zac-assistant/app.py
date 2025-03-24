@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)  # Enable Cross-Origin Resource Sharing
 
 # Constants
-OPENROUTER_API_KEY = os.getenv("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")
+OPENROUTER_API_KEY = os.getenv("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")
 if not OPENROUTER_API_KEY:
     raise ValueError("Missing OPENROUTER_API_KEY environment variable.")
 
