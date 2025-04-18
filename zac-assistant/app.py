@@ -1,4 +1,4 @@
-ffrom flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template
 import requests
 import os
 from flask_cors import CORS
